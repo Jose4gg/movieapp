@@ -6,18 +6,11 @@ const MainNavigator = createStackNavigator(
   {
     HomeScene: {
       screen: HomeScene,
-      navigationOptions: {
-        title: 'The Movies',
-        headerTitleStyle: {
-          fontFamily: 'Movie Star',
-          fontWeight: 'bold',
-          color: '#E53628',
-        },
-      },
     },
   },
   {
     initialRouteName: 'HomeScene',
+    headerMode: 'none',
   },
 );
 
