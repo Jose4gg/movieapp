@@ -8,7 +8,13 @@
 
 import React from 'react';
 import {AppContainer} from './src/router/router';
+import {DarkTheme} from 'react-native-paper';
+import {ThemeProvider} from './src/utils/theme';
 
 export default function App() {
-  return <AppContainer></AppContainer>;
+  return (
+    <ThemeProvider theme={DarkTheme}>
+      <AppContainer />
+    </ThemeProvider>
+  );
 }
