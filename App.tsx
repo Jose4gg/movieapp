@@ -9,6 +9,6 @@
 import React from 'react';
 import {AppContainer} from './src/router/router';
 
-const App = () => {
-  return <AppContainer />;
-};
+export default function App() {
+  return <AppContainer></AppContainer>;
+}
