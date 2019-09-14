@@ -12,7 +12,7 @@ const {ThemeProvider, useTheme} = createTheming({
   colors: {
     ...DarkTheme.colors,
     placeholder: color(Colors.white)
-      .alpha(0.65)
+      .alpha(0.5)
       .rgb()
       .string(),
     text: color(Colors.white)

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {useTheme} from '../../utils/theme';
 import styled from 'styled-components/native';
-import {Headline, Subheading, Divider} from 'react-native-paper';
+import {Headline, Subheading} from 'react-native-paper';
 import {
   SectionList,
   ImageBackground,
@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import {Poster} from '../../components';
 import {SafeAreaView} from 'react-navigation';
+import color from 'color';
 
 const BG = require('../../assets/images/movietheater.jpg');
 
@@ -25,8 +26,8 @@ const Container = styled(SafeAreaView)`
 const SubHeader = styled(Subheading)<{color: string}>`
   font-weight: bold;
   color: ${props => props.color};
-  margin-top: 0;
-  margin-bottom: 0;
+  padding-top: 16px;
+  padding-bottom: 16px;
 `;
 
 const exampleData = [
@@ -34,55 +35,59 @@ const exampleData = [
     title: 'Whats hot 🔥',
     data: [
       {
-        popularity: 481.769,
-        vote_count: 364,
-        video: false,
-        poster_path: '/zfE0R94v1E8cuKAerbskfD3VfUt.jpg',
-        id: 474350,
-        adult: false,
-        backdrop_path: '/p15fLYp0X04mS8cbHVj7mZ6PBBE.jpg',
-        original_language: 'en',
-        original_title: 'It Chapter Two',
-        genre_ids: [35, 27],
-        title: 'It Chapter Two',
-        vote_average: 7.2,
-        overview:
-          "27 years after overcoming the malevolent supernatural entity Pennywise, the former members of the Losers' Club, who have grown up and moved away from Derry, are brought back together by a devastating phone call.",
-        release_date: '2019-09-06',
-      },
-      {
-        popularity: 281.362,
-        vote_count: 499,
-        video: false,
-        poster_path: '/a4BfxRK8dBgbQqbRxPs8kmLd8LG.jpg',
-        id: 429203,
-        adult: false,
-        backdrop_path: '/6X2YjjYcs8XyZRDmJAHNDlls7L4.jpg',
-        original_language: 'en',
-        original_title: 'The Old Man & the Gun',
-        genre_ids: [35, 80, 18],
-        title: 'The Old Man & the Gun',
-        vote_average: 6.3,
-        overview:
-          'The true story of Forrest Tucker, from his audacious escape from San Quentin at the age of 70 to an unprecedented string of heists that confounded authorities and enchanted the public. Wrapped up in the pursuit are a detective, who becomes captivated with Forrest’s commitment to his craft, and a woman, who loves him in spite of his chosen profession.',
-        release_date: '2018-09-28',
-      },
-      {
-        popularity: 255.151,
-        vote_count: 3402,
-        video: false,
-        poster_path: '/lcq8dVxeeOqHvvgcte707K0KVx5.jpg',
-        id: 429617,
-        adult: false,
-        backdrop_path: '/5myQbDzw3l8K9yofUXRJ4UTVgam.jpg',
-        original_language: 'en',
-        original_title: 'Spider-Man: Far from Home',
-        genre_ids: [28, 12, 878],
-        title: 'Spider-Man: Far from Home',
-        vote_average: 7.7,
-        overview:
-          'Peter Parker and his friends go on a summer trip to Europe. However, they will hardly be able to rest - Peter will have to agree to help Nick Fury uncover the mystery of creatures that cause natural disasters and destruction throughout the continent.',
-        release_date: '2019-07-02',
+        data: [
+          {
+            popularity: 481.769,
+            vote_count: 364,
+            video: false,
+            poster_path: '/zfE0R94v1E8cuKAerbskfD3VfUt.jpg',
+            id: 474350,
+            adult: false,
+            backdrop_path: '/p15fLYp0X04mS8cbHVj7mZ6PBBE.jpg',
+            original_language: 'en',
+            original_title: 'It Chapter Two',
+            genre_ids: [35, 27],
+            title: 'It Chapter Two',
+            vote_average: 7.2,
+            overview:
+              "27 years after overcoming the malevolent supernatural entity Pennywise, the former members of the Losers' Club, who have grown up and moved away from Derry, are brought back together by a devastating phone call.",
+            release_date: '2019-09-06',
+          },
+          {
+            popularity: 281.362,
+            vote_count: 499,
+            video: false,
+            poster_path: '/a4BfxRK8dBgbQqbRxPs8kmLd8LG.jpg',
+            id: 429203,
+            adult: false,
+            backdrop_path: '/6X2YjjYcs8XyZRDmJAHNDlls7L4.jpg',
+            original_language: 'en',
+            original_title: 'The Old Man & the Gun',
+            genre_ids: [35, 80, 18],
+            title: 'The Old Man & the Gun',
+            vote_average: 6.3,
+            overview:
+              'The true story of Forrest Tucker, from his audacious escape from San Quentin at the age of 70 to an unprecedented string of heists that confounded authorities and enchanted the public. Wrapped up in the pursuit are a detective, who becomes captivated with Forrest’s commitment to his craft, and a woman, who loves him in spite of his chosen profession.',
+            release_date: '2018-09-28',
+          },
+          {
+            popularity: 255.151,
+            vote_count: 3402,
+            video: false,
+            poster_path: '/lcq8dVxeeOqHvvgcte707K0KVx5.jpg',
+            id: 429617,
+            adult: false,
+            backdrop_path: '/5myQbDzw3l8K9yofUXRJ4UTVgam.jpg',
+            original_language: 'en',
+            original_title: 'Spider-Man: Far from Home',
+            genre_ids: [28, 12, 878],
+            title: 'Spider-Man: Far from Home',
+            vote_average: 7.7,
+            overview:
+              'Peter Parker and his friends go on a summer trip to Europe. However, they will hardly be able to rest - Peter will have to agree to help Nick Fury uncover the mystery of creatures that cause natural disasters and destruction throughout the continent.',
+            release_date: '2019-07-02',
+          },
+        ],
       },
     ],
   },
@@ -404,7 +409,6 @@ const PADDING_HORIZONTAL = 16;
 export function HomeScene() {
   const theme = useTheme();
   const width = Dimensions.get('screen').width;
-  const [hot, ...data] = exampleData;
 
   const _Header = (
     <>
@@ -412,43 +416,58 @@ export function HomeScene() {
         style={{
           fontSize: 34,
           fontWeight: 'bold',
-          color: theme.colors.text,
+          color: color(theme.colors.text)
+            .alpha(1)
+            .rgb()
+            .toString(),
           marginVertical: 0,
         }}>
         Now Showing
       </Headline>
-      <SubHeader color={theme.colors.placeholder}>Richmong, Victoria</SubHeader>
-      <Divider style={{height: 24, backgroundColor: 'rgba(0,0,0,0)'}} />
-      <SubHeader color={theme.colors.text}>{hot.title}</SubHeader>
-      <Divider style={{height: 10}} />
-      <FlatList
-        horizontal
-        style={{marginHorizontal: PADDING_HORIZONTAL * -1}}
-        data={hot.data}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item: any) => `${item.id}`}
-        renderItem={({item}: {item: any}) => {
-          return (
-            <Poster
-              size={180}
-              margin={18}
-              url={`https://image.tmdb.org/t/p/w300/${item.poster_path}`}
-            />
-          );
-        }}
-      />
-      <Divider style={{height: 30, backgroundColor: 'rgba(0,0,0,0)'}} />
+      <Subheading
+        style={{
+          color: theme.colors.placeholder,
+          fontWeight: 'bold',
+          marginTop: 0,
+        }}>
+        Richmong, Victoria
+      </Subheading>
     </>
   );
 
   const _SubHeader = ({section: {title}}: any) => (
     <>
       <SubHeader color={theme.colors.text}>{title}</SubHeader>
-      <Divider style={{height: 10}} />
     </>
   );
 
   const _renderItems: SectionListRenderItem<any> = ({section, index}) => {
+    if (section.data[index] && section.data[index].data) {
+      return (
+        <FlatList
+          horizontal
+          style={{
+            marginHorizontal: PADDING_HORIZONTAL * -1,
+          }}
+          data={section.data[index].data}
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item: any) => `${item.id}`}
+          ListFooterComponent={() => (
+            <View style={{width: PADDING_HORIZONTAL}} />
+          )}
+          renderItem={({item}: {item: any}) => {
+            return (
+              <Poster
+                size={180}
+                margin={18}
+                url={`https://image.tmdb.org/t/p/w300/${item.poster_path}`}
+              />
+            );
+          }}
+        />
+      );
+    }
+
     const numColumns = 3;
     if (index % numColumns !== 0) return null;
     const items = [];
@@ -470,12 +489,13 @@ export function HomeScene() {
       <>
         <View
           style={{
+            marginTop: index == 1 ? 50 : 0,
             flexDirection: 'row',
             justifyContent: 'space-between',
           }}>
           {items}
         </View>
-        <Divider style={{height: 10}} />
+        <View style={{height: 5}} />
       </>
     );
   };
@@ -489,8 +509,9 @@ export function HomeScene() {
       ]}>
       <Container forceInset={{bottom: 'never'}}>
         <SectionList
+          sections={exampleData}
           keyExtractor={item => `${item.id}`}
-          sections={data}
+          stickySectionHeadersEnabled={false}
           contentContainerStyle={{
             paddingHorizontal: PADDING_HORIZONTAL,
             marginTop: 10,
@@ -499,7 +520,11 @@ export function HomeScene() {
           renderItem={_renderItems}
           renderSectionHeader={_SubHeader}
           ListFooterComponent={
-            <Divider style={{height: PADDING_HORIZONTAL * 2}} />
+            <View
+              style={{
+                height: 70,
+              }}
+            />
           }
         />
       </Container>
