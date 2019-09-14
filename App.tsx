@@ -8,12 +8,13 @@
 
 import React from 'react';
 import {AppContainer} from './src/router/router';
-import {DarkTheme} from 'react-native-paper';
 import {ThemeProvider} from './src/utils/theme';
+import {StatusBar} from 'react-native';
 
 export default function App() {
   return (
-    <ThemeProvider theme={DarkTheme}>
+    <ThemeProvider>
+      <StatusBar barStyle="light-content" />
       <AppContainer />
     </ThemeProvider>
   );
