@@ -42,15 +42,16 @@ export function Poster({url, size = 40, margin = 0, data}: IPoster) {
         <Image source={{uri: url}} size={size} color={primary} />
         {data ? (
           <View style={{paddingTop: 5, paddingHorizontal: size * 0.02}}>
-            {/* <Text
+            <Text
               style={{
                 color: theme.colors.text,
                 fontWeight: '500',
                 fontFamily: 'Arial',
               }}>
               {data.title}
-            </Text> */}
-            <StarRating />
+            </Text>
+            <View style={{height: 5}} />
+            <StarRating size={20} rating={Math.round(data.vote_average / 2)} />
           </View>
         ) : null}
       </TouchableOpacity>
