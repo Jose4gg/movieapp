@@ -50,8 +50,11 @@ export function Poster({url, size = 40, margin = 0, data}: IPoster) {
               }}>
               {data.title}
             </Text>
-            <View style={{height: 5}} />
-            <StarRating size={20} rating={Math.round(data.vote_average / 2)} />
+            <View style={{height: 4}} />
+            <StarRating
+              size={size / 6}
+              rating={Math.round(data.vote_average / 2)}
+            />
           </View>
         ) : null}
       </TouchableOpacity>

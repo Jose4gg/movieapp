@@ -479,7 +479,7 @@ export function HomeScene() {
         <Poster
           key={section.data[i].poster_path}
           url={`https://image.tmdb.org/t/p/w300/${section.data[i].poster_path}`}
-          size={width / 3 - PADDING_HORIZONTAL}
+          size={width / numColumns - PADDING_HORIZONTAL}
           data={section.data[i]}
         />,
       );
