@@ -5,6 +5,7 @@ import {View, TouchableOpacity} from 'react-native';
 import {Text, Divider} from 'react-native-paper';
 import {StarRating} from './StarRating';
 import {useNavigation} from 'react-navigation-hooks';
+import color from 'color';
 
 const Image = styled.Image<{size: number; color: string}>`
   width: ${props => props.size};
@@ -54,7 +55,17 @@ export function Poster({
           elevation: 7,
           marginLeft: margin,
         }}>
-        <Image source={{uri: url}} size={size} color={primary} />
+        <Image
+          source={{uri: url}}
+          size={size}
+          color={primary}
+          style={{
+            backgroundColor: color(theme.colors.surface)
+              .darken(0.8)
+              .rgb()
+              .string(),
+          }}
+        />
         {showInfo ? (
           <View style={{paddingTop: 5, paddingHorizontal: size * 0.02}}>
             <Text

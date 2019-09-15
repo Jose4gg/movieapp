@@ -18,6 +18,9 @@ import color from 'color';
 import {useSelector, useDispatch} from 'react-redux';
 import {ReduxState} from '../../store';
 import {loadPopularAndUpcoming} from '../../store/movies/moviesActions';
+import SvgAnimatedLinearGradient from 'react-native-svg-animated-linear-gradient';
+import {Rect} from 'react-native-svg';
+import {GridContentLoader} from './GridContentLoader';
 
 const BG = require('../../assets/images/movietheater.jpg');
 
@@ -35,11 +38,13 @@ const SubHeader = styled(Subheading)<{color: string}>`
 `;
 
 const PADDING_HORIZONTAL = 16;
+const NUM_COLUMNS = 3;
 
 export function HomeScene() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const width = Dimensions.get('screen').width;
+  const smallPosterWidth = width / NUM_COLUMNS - PADDING_HORIZONTAL;
   const [popular, upcoming, isLoading] = useSelector((state: ReduxState) => [
     state.movies.popular,
     state.movies.upcoming,
@@ -57,10 +62,12 @@ export function HomeScene() {
   const data = [
     {
       title: 'Whats hot 🔥',
-      data: [{data: popular.movies}],
+      horizontal: true,
+      data: [{data: popular.movies || null}],
     },
     {
       title: 'Upcoming 📽',
+      horizontal: false,
       data: upcoming.movies,
     },
   ];
@@ -90,14 +97,55 @@ export function HomeScene() {
     </>
   );
 
-  const _SubHeader = ({section: {title}}: any) => (
+  const _SubHeader = ({section: {title, data, horizontal}}: any) => (
     <>
       <SubHeader color={theme.colors.text}>{title}</SubHeader>
+      <GridContentLoader
+        loading={!horizontal && isLoading && data.length == 0}
+        smallPosterWidth={smallPosterWidth}
+        NUM_COLUMNS={NUM_COLUMNS}
+        PADDING_HORIZONTAL={PADDING_HORIZONTAL}
+        width={width}
+      />
     </>
   );
 
   const _renderItems: SectionListRenderItem<any> = ({section, index}) => {
-    if (section.data[index] && section.data[index].data) {
+    if (section.horizontal) {
+      if (section.data[index].data.length == 0 && isLoading) {
+        return (
+          <SvgAnimatedLinearGradient
+            height={180 * 1.5}
+            width={width}
+            duration={1000}
+            primaryColor={color(theme.colors.surface)
+              .darken(0.8)
+              .rgb()
+              .string()}
+            secondaryColor={color(theme.colors.surface)
+              .darken(0.5)
+              .rgb()
+              .string()}>
+            <Rect
+              x="0"
+              y="0"
+              rx="4"
+              ry="4"
+              width="180"
+              height={`${170 * 1.5}`}
+            />
+            <Rect
+              x="200"
+              y="0"
+              rx="4"
+              ry="4"
+              width="180"
+              height={`${170 * 1.5}`}
+            />
+          </SvgAnimatedLinearGradient>
+        );
+      }
+
       return (
         <FlatList
           horizontal
@@ -125,10 +173,9 @@ export function HomeScene() {
       );
     }
 
-    const numColumns = 3;
-    if (index % numColumns !== 0) return null;
+    if (index % NUM_COLUMNS !== 0) return null;
     const items = [];
-    for (let i = index; i < index + numColumns; i++) {
+    for (let i = index; i < index + NUM_COLUMNS; i++) {
       if (i >= section.data.length) {
         break;
       }
@@ -136,7 +183,7 @@ export function HomeScene() {
         <Poster
           key={section.data[i].poster_path}
           url={`https://image.tmdb.org/t/p/w300/${section.data[i].poster_path}`}
-          size={width / numColumns - PADDING_HORIZONTAL}
+          size={smallPosterWidth}
           data={section.data[i]}
         />,
       );

@@ -43,20 +43,22 @@ export const loadPopularAndUpcoming = () => {
 
     axios.all([getPopular(), getUpcoming()]).then(
       axios.spread(function(popular, upcoming) {
-        dispath(
-          setPopularAndUpcoming(
-            {
-              currentPage: popular.data.page,
-              movies: popular.data.results,
-              totalPages: popular.data.total_pages,
-            },
-            {
-              currentPage: upcoming.data.page,
-              movies: upcoming.data.results,
-              totalPages: upcoming.data.total_pages,
-            },
-          ),
-        );
+        setTimeout(() => {
+          dispath(
+            setPopularAndUpcoming(
+              {
+                currentPage: popular.data.page,
+                movies: popular.data.results,
+                totalPages: popular.data.total_pages,
+              },
+              {
+                currentPage: upcoming.data.page,
+                movies: upcoming.data.results,
+                totalPages: upcoming.data.total_pages,
+              },
+            ),
+          );
+        }, 3000);
       }),
     );
   };
