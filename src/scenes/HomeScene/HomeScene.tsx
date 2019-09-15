@@ -536,4 +536,5 @@ export function HomeScene() {
 
 HomeScene.navigationOptions = {
   header: null,
+  headerBackTitle: null,
 };

@@ -78,6 +78,9 @@ export function MovieScene() {
 
       <ScrollView
         ref={scroll}
+        bounces={false}
+        bouncesZoom
+        endFillColor={backgroundColor}
         style={{backgroundColor: 'rgba(0,0,0,0.01)'}}
         scrollEventThrottle={16}
         onScroll={event => {
@@ -149,11 +152,11 @@ function CustomBack(props: {tintColor: string; title?: string | null}) {
     <View
       style={{
         backgroundColor: 'rgba(0,0,0,0.55)',
-        height: 56,
-        width: 56,
+        height: 50,
+        width: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 28,
+        borderRadius: 25,
         transform: [
           {
             scaleX: 0.8,
@@ -170,10 +173,12 @@ function CustomBack(props: {tintColor: string; title?: string | null}) {
 
 const navigationOptions: NavigationStackOptions = {
   headerTransparent: true,
-  headerBackTitle: '',
+  headerBackTitle: 'Atrás',
   headerBackImage: CustomBack,
+  headerTruncatedBackTitle: '',
   headerStyle: {
-    height: 90,
+    height: 80,
+    backgroundColor: 'transparent',
   },
 };
 
