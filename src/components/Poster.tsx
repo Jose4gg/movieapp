@@ -1,13 +1,14 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {useTheme} from '../utils/theme';
-import {View, TouchableOpacity} from 'react-native';
-import {Text, Divider} from 'react-native-paper';
+import {View, TouchableOpacity, Image as RNImage} from 'react-native';
+import {Text} from 'react-native-paper';
 import {StarRating} from './StarRating';
 import {useNavigation} from 'react-navigation-hooks';
+import {animated, useSpring} from 'react-spring';
 import color from 'color';
 
-const Image = styled.Image<{size: number; color: string}>`
+const Image = styled(animated(RNImage))<{size: number; color: string}>`
   width: ${props => props.size};
   height: ${props => props.size * 1.5};
   border-radius: ${props => props.size * 0.08};
@@ -32,6 +33,8 @@ export function Poster({
 }: IPoster) {
   const theme = useTheme();
   const navigation = useNavigation();
+  const [loaded, setLoaded] = useState(false);
+  const spring = useSpring({opacity: loaded ? 1 : 0});
 
   const goToMovie = useCallback(() => {
     navigation.navigate('MovieScene', {movie: data});
@@ -58,13 +61,17 @@ export function Poster({
         <Image
           source={{uri: url}}
           size={size}
+          onLoadEnd={() => setLoaded(true)}
           color={primary}
-          style={{
-            backgroundColor: color(theme.colors.surface)
-              .darken(0.8)
-              .rgb()
-              .string(),
-          }}
+          style={[
+            spring,
+            {
+              backgroundColor: color(theme.colors.surface)
+                .darken(0.8)
+                .rgb()
+                .string(),
+            },
+          ]}
         />
         {showInfo ? (
           <View style={{paddingTop: 5, paddingHorizontal: size * 0.02}}>

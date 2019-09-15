@@ -7,7 +7,7 @@ import {
   ImageBackground,
   StyleSheet,
   SectionListRenderItem,
-  FlatList,
+  FlatList as FL,
   View,
   Dimensions,
   RefreshControl,
@@ -18,10 +18,10 @@ import color from 'color';
 import {useSelector, useDispatch} from 'react-redux';
 import {ReduxState} from '../../store';
 import {loadPopularAndUpcoming} from '../../store/movies/moviesActions';
-import SvgAnimatedLinearGradient from 'react-native-svg-animated-linear-gradient';
-import {Rect} from 'react-native-svg';
 import {GridContentLoader} from './GridContentLoader';
 import {CarouselContentLoader} from './CarouselContentLoader';
+import {useSpring, animated} from 'react-spring';
+const FlatList = animated(FL);
 
 const BG = require('../../assets/images/movietheater.jpg');
 
@@ -176,6 +176,8 @@ export function HomeScene() {
             justifyContent: 'space-between',
           }}>
           {items}
+          {items.length < 3 ? <View style={{width: smallPosterWidth}} /> : null}
+          {items.length < 2 ? <View style={{width: smallPosterWidth}} /> : null}
         </View>
         <View style={{height: 5}} />
       </>

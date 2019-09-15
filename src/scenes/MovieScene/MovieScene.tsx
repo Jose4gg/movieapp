@@ -6,7 +6,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  Platform,
+  Image,
 } from 'react-native';
 import {useNavigationParam} from 'react-navigation-hooks';
 import {useTheme} from '../../utils/theme';
@@ -14,7 +14,9 @@ import styled from 'styled-components/native';
 import {Headline, Button, Subheading} from 'react-native-paper';
 import color from 'color';
 import {StarRating} from '../../components';
-import {NavigationStackOptions} from 'react-navigation-stack';
+import {animated, useSpring} from 'react-spring';
+
+const AnimatedImage = animated(Image);
 
 const ContentContainer = styled.View<{color: string}>`
   padding-left: 16px;
@@ -25,8 +27,6 @@ const ContentContainer = styled.View<{color: string}>`
   border-top-right-radius: 16px;
 `;
 
-var AnimatedImage = Animated.createAnimatedComponent(ImageBackground);
-
 export function MovieScene() {
   const movie = useNavigationParam('movie');
   const theme = useTheme();
@@ -34,7 +34,16 @@ export function MovieScene() {
   const [scrolled, setScrolled] = useState(false);
   const {height} = Dimensions.get('screen');
   const backgroundColor = theme.colors.surface;
+  const [loaded, setLoaded] = useState(false);
   const deltaY = useRef(new Animated.Value(height)).current;
+
+  const spring = useSpring({
+    opacity: loaded ? 1 : 0,
+  });
+
+  const [scale, set] = useSpring(() => ({
+    scale: height,
+  }));
 
   useEffect(() => {
     setTimeout(() => {
@@ -43,37 +52,40 @@ export function MovieScene() {
           y: height * 0.5,
           animated: true,
         });
+        setScrolled(true);
       }
     }, 200);
   });
 
   return (
     <View style={{flex: 1, backgroundColor}}>
-      <Animated.Image
+      <AnimatedImage
+        onLoadEnd={() => setLoaded(true)}
         source={{
           uri: `https://image.tmdb.org/t/p/original/${movie.poster_path}`,
         }}
-        style={[
-          StyleSheet.absoluteFillObject,
-          {
-            transform: [
-              {
-                scaleX: deltaY.interpolate({
-                  inputRange: [1, height],
-                  outputRange: [1.5, 1],
-                  extrapolateRight: 'clamp',
-                }),
-              },
-              {
-                scaleY: deltaY.interpolate({
-                  inputRange: [1, height],
-                  outputRange: [1.5, 1],
-                  extrapolateRight: 'clamp',
-                }),
-              },
-            ],
-          },
-        ]}
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          opacity: spring.opacity,
+          transform: [
+            {
+              scaleX: scale.scale
+                .interpolate({
+                  range: [1, height],
+                  output: [1.5, 1],
+                })
+                .interpolate(x => x),
+            },
+            {
+              scaleY: scale.scale
+                .interpolate({
+                  range: [1, height],
+                  output: [1.5, 1],
+                })
+                .interpolate(x => x),
+            },
+          ],
+        }}
       />
 
       <ScrollView
@@ -85,6 +97,9 @@ export function MovieScene() {
         scrollEventThrottle={16}
         onScroll={event => {
           deltaY.setValue(height - event.nativeEvent.contentOffset.y);
+          set({
+            scale: height - event.nativeEvent.contentOffset.y,
+          });
         }}>
         <View style={{height: height}} />
         <ContentContainer
