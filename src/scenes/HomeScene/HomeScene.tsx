@@ -21,6 +21,7 @@ import {loadPopularAndUpcoming} from '../../store/movies/moviesActions';
 import SvgAnimatedLinearGradient from 'react-native-svg-animated-linear-gradient';
 import {Rect} from 'react-native-svg';
 import {GridContentLoader} from './GridContentLoader';
+import {CarouselContentLoader} from './CarouselContentLoader';
 
 const BG = require('../../assets/images/movietheater.jpg');
 
@@ -113,36 +114,13 @@ export function HomeScene() {
   const _renderItems: SectionListRenderItem<any> = ({section, index}) => {
     if (section.horizontal) {
       if (section.data[index].data.length == 0 && isLoading) {
+        const height = 180;
         return (
-          <SvgAnimatedLinearGradient
-            height={180 * 1.5}
+          <CarouselContentLoader
             width={width}
-            duration={1000}
-            primaryColor={color(theme.colors.surface)
-              .darken(0.8)
-              .rgb()
-              .string()}
-            secondaryColor={color(theme.colors.surface)
-              .darken(0.5)
-              .rgb()
-              .string()}>
-            <Rect
-              x="0"
-              y="0"
-              rx="4"
-              ry="4"
-              width="180"
-              height={`${170 * 1.5}`}
-            />
-            <Rect
-              x="200"
-              y="0"
-              rx="4"
-              ry="4"
-              width="180"
-              height={`${170 * 1.5}`}
-            />
-          </SvgAnimatedLinearGradient>
+            height={height}
+            padding={PADDING_HORIZONTAL}
+          />
         );
       }
 
@@ -215,7 +193,7 @@ export function HomeScene() {
         <SectionList
           refreshControl={
             <RefreshControl
-              refreshing={isLoading}
+              refreshing={isLoading && data[1].data.length != 0}
               colors={[theme.colors.text]}
               tintColor={theme.colors.text}
               onRefresh={load}
