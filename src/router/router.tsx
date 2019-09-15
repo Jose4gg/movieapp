@@ -1,6 +1,7 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import {HomeScene, MovieScene} from '../scenes';
 import {createAppContainer} from 'react-navigation';
+import {CustomBack} from './CustomBackButton';
 
 const MainNavigator = createStackNavigator(
   {
@@ -13,7 +14,15 @@ const MainNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'HomeScene',
-    // headerMode: 'none',
+    defaultNavigationOptions: {
+      headerTransparent: true,
+      headerBackImage: CustomBack,
+      headerTruncatedBackTitle: '',
+      headerStyle: {
+        height: 80,
+        backgroundColor: 'transparent',
+      },
+    },
   },
 );
 
