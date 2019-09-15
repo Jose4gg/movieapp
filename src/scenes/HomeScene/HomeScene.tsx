@@ -414,7 +414,7 @@ export function HomeScene() {
     <>
       <Headline
         style={{
-          fontSize: 34,
+          fontSize: 32,
           fontWeight: 'bold',
           color: color(theme.colors.text)
             .alpha(1)
@@ -458,6 +458,8 @@ export function HomeScene() {
           renderItem={({item}: {item: any}) => {
             return (
               <Poster
+                data={item}
+                showInfo={false}
                 size={180}
                 margin={18}
                 url={`https://image.tmdb.org/t/p/w300/${item.poster_path}`}

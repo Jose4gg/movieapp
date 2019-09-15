@@ -14,7 +14,7 @@ import {StatusBar} from 'react-native';
 export default function App() {
   return (
     <ThemeProvider>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="light-content" backgroundColor="black" />
       <AppContainer />
     </ThemeProvider>
   );

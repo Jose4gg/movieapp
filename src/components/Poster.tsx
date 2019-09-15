@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import {useTheme} from '../utils/theme';
 import {View, TouchableOpacity} from 'react-native';
 import {Text, Divider} from 'react-native-paper';
 import {StarRating} from './StarRating';
+import {useNavigation} from 'react-navigation-hooks';
 
 const Image = styled.Image<{size: number; color: string}>`
   width: ${props => props.size};
@@ -17,15 +18,29 @@ interface IPoster {
   url: string;
   size?: number;
   margin?: number;
-  data?: any;
+  data: any;
+  showInfo?: boolean;
 }
 
-export function Poster({url, size = 40, margin = 0, data}: IPoster) {
+export function Poster({
+  url,
+  size = 40,
+  margin = 0,
+  data,
+  showInfo = true,
+}: IPoster) {
   const theme = useTheme();
+  const navigation = useNavigation();
+
+  const goToMovie = useCallback(() => {
+    navigation.navigate('MovieScene', {movie: data});
+  }, [data]);
+
   const primary = theme.colors.primary;
   return (
     <>
       <TouchableOpacity
+        onPress={goToMovie}
         style={{
           maxWidth: size,
           minHeight: size * 1.5 + 5,
@@ -40,7 +55,7 @@ export function Poster({url, size = 40, margin = 0, data}: IPoster) {
           marginLeft: margin,
         }}>
         <Image source={{uri: url}} size={size} color={primary} />
-        {data ? (
+        {showInfo ? (
           <View style={{paddingTop: 5, paddingHorizontal: size * 0.02}}>
             <Text
               style={{

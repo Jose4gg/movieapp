@@ -1,11 +1,14 @@
 import {createStackNavigator} from 'react-navigation-stack';
-import {HomeScene} from '../scenes';
+import {HomeScene, MovieScene} from '../scenes';
 import {createAppContainer} from 'react-navigation';
 
 const MainNavigator = createStackNavigator(
   {
     HomeScene: {
       screen: HomeScene,
+    },
+    MovieScene: {
+      screen: MovieScene,
     },
   },
   {
