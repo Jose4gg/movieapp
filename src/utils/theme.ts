@@ -11,6 +11,7 @@ const {ThemeProvider, useTheme} = createTheming({
   },
   colors: {
     ...DarkTheme.colors,
+    error: '#FF0100',
     placeholder: color(Colors.white)
       .alpha(0.5)
       .rgb()

@@ -533,3 +533,7 @@ export function HomeScene() {
     </ImageBackground>
   );
 }
+
+HomeScene.navigationOptions = {
+  header: null,
+};

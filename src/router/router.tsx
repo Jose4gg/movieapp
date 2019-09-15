@@ -13,7 +13,7 @@ const MainNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'HomeScene',
-    headerMode: 'none',
+    // headerMode: 'none',
   },
 );
 
