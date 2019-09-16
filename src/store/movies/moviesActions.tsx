@@ -57,7 +57,7 @@ export const loadMoreUpcoming = () => {
         .then(response => {
           setTimeout(() => {
             dispatch(setMoreUpcoming(response.data));
-          }, 3000);
+          }, 1000);
         });
     }
   };
@@ -92,7 +92,7 @@ export const loadPopularAndUpcoming = () => {
               },
             ),
           );
-        }, 0);
+        }, 1000);
       }),
     );
   };
