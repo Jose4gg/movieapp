@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect, useCallback} from 'react';
 import {
   Dimensions,
   Animated,
@@ -14,9 +14,6 @@ import styled from 'styled-components/native';
 import {Headline, Button, Subheading} from 'react-native-paper';
 import color from 'color';
 import {StarRating} from '../../components';
-import {animated, useSpring} from 'react-spring';
-
-const AnimatedImage = animated(Image);
 
 const ContentContainer = styled.View<{color: string}>`
   padding-left: 16px;
@@ -34,15 +31,16 @@ export function MovieScene() {
   const [scrolled, setScrolled] = useState(false);
   const {height} = Dimensions.get('screen');
   const backgroundColor = theme.colors.surface;
-  const [loaded, setLoaded] = useState(false);
+  const [fadeAnim] = useState(new Animated.Value(0));
+  const [scaleAnim] = useState(new Animated.Value(height));
 
-  const spring = useSpring({
-    opacity: loaded ? 1 : 0,
-  });
-
-  const [scale, set] = useSpring(() => ({
-    scale: height,
-  }));
+  const show = useCallback(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -61,40 +59,43 @@ export function MovieScene() {
     .rgb()
     .string();
 
+  const scale = useCallback(value => {
+    Animated.timing(scaleAnim, {
+      toValue: value,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   return (
     <View style={{flex: 1, backgroundColor: background}}>
       <View style={[StyleSheet.absoluteFillObject, {overflow: 'scroll'}]}>
-        <AnimatedImage
-          onLoadEnd={() => setLoaded(true)}
+        <Animated.Image
+          onLoadEnd={show}
           source={{
             uri: `https://image.tmdb.org/t/p/original/${movie.poster_path}`,
           }}
-          style={{
-            ...StyleSheet.absoluteFill,
-            opacity: spring.opacity.interpolate({
-              range: [0, 0, 1],
-              output: [0, 1, 1],
-            }),
-            overflow: 'hidden',
-            transform: [
-              {
-                scaleX: scale.scale
-                  .interpolate({
-                    range: [1, height],
-                    output: [1.5, 1],
-                  })
-                  .interpolate(x => x),
-              },
-              {
-                scaleY: scale.scale
-                  .interpolate({
-                    range: [1, height],
-                    output: [1.5, 1],
-                  })
-                  .interpolate(x => x),
-              },
-            ],
-          }}
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              opacity: fadeAnim,
+              overflow: 'hidden',
+              transform: [
+                {
+                  scaleX: scaleAnim.interpolate({
+                    inputRange: [1, height],
+                    outputRange: [1.5, 1],
+                  }),
+                },
+                {
+                  scaleY: scaleAnim.interpolate({
+                    inputRange: [1, height],
+                    outputRange: [1.5, 1],
+                  }),
+                },
+              ],
+            },
+          ]}
         />
       </View>
 
@@ -106,9 +107,7 @@ export function MovieScene() {
         style={{backgroundColor: 'rgba(0,0,0,0.01)'}}
         scrollEventThrottle={16}
         onScroll={event => {
-          set({
-            scale: height - event.nativeEvent.contentOffset.y,
-          });
+          scale(height - event.nativeEvent.contentOffset.y);
         }}>
         <View style={{height: height}} />
         <ContentContainer style={{minHeight: height * 0.6}} color={background}>

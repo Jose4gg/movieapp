@@ -7,7 +7,7 @@ import {
   ImageBackground,
   StyleSheet,
   SectionListRenderItem,
-  FlatList as FL,
+  FlatList,
   View,
   Dimensions,
   ActivityIndicator,
@@ -24,8 +24,6 @@ import {
 } from '../../store/movies/moviesActions';
 import {GridContentLoader} from './GridContentLoader';
 import {CarouselContentLoader} from './CarouselContentLoader';
-import {animated} from 'react-spring';
-const FlatList = animated(FL);
 
 const BG = require('../../assets/images/movietheater.jpg');
 

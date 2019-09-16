@@ -18,12 +18,12 @@ npm run (ios | android)
 ## Packages Used for this Demo
 
 - React-Native 0.63.rc3
+- Animated library from RN, fadeIn, and background scaling effect
 - Typescript 🙌🏽
 - React-Navigation, React-Navigation-Hooks
 - React-Native-Dotenv, secure tokens
 - Redux, Redux-Thunk for global state
 - React-Native-Paper - Buttons, global theming, material components
-- React-Spring for small animations, fadeIn, and background scaling effect
 - React-Native-Vector-Icons
 - React-Native-SVG and React-Native-SVG-Animated for content loaders
 - Axios with instances to connect with API
@@ -34,9 +34,6 @@ npm run (ios | android)
 | :-------------------------------------: | :---------------------------------------: |
 | ![Home Scene](./showcase/HomeScene.png) | ![Movie Scene](./showcase/MovieScene.png) |
 
-
-|               Video                     |                                           |
-| :-------------------------------------: | :---------------------------------------: |
-| ![Video](./showcase/video.gif)          |                                           |
-
-
+|             Video              |     |
+| :----------------------------: | :-: |
+| ![Video](./showcase/video.gif) |     |
