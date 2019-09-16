@@ -59,14 +59,6 @@ export function MovieScene() {
     .rgb()
     .string();
 
-  const scale = useCallback(value => {
-    Animated.timing(scaleAnim, {
-      toValue: value,
-      duration: 250,
-      useNativeDriver: true,
-    }).start();
-  }, []);
-
   return (
     <View style={{flex: 1, backgroundColor: background}}>
       <View style={[StyleSheet.absoluteFillObject, {overflow: 'scroll'}]}>
@@ -85,12 +77,14 @@ export function MovieScene() {
                   scaleX: scaleAnim.interpolate({
                     inputRange: [1, height],
                     outputRange: [1.5, 1],
+                    extrapolate: 'clamp',
                   }),
                 },
                 {
                   scaleY: scaleAnim.interpolate({
                     inputRange: [1, height],
                     outputRange: [1.5, 1],
+                    extrapolate: 'clamp',
                   }),
                 },
               ],
@@ -107,7 +101,8 @@ export function MovieScene() {
         style={{backgroundColor: 'rgba(0,0,0,0.01)'}}
         scrollEventThrottle={16}
         onScroll={event => {
-          scale(height - event.nativeEvent.contentOffset.y);
+          // scale(height - event.nativeEvent.contentOffset.y);
+          scaleAnim.setValue(height - event.nativeEvent.contentOffset.y);
         }}>
         <View style={{height: height}} />
         <ContentContainer style={{minHeight: height * 0.6}} color={background}>
