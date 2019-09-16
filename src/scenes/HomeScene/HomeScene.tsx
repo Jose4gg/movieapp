@@ -52,7 +52,7 @@ export function HomeScene() {
   const [popular, upcoming, isLoading] = useSelector((state: ReduxState) => [
     state.movies.popular,
     state.movies.upcoming,
-    state.movies.popular.isLoading || state.movies.upcoming.isLoading,
+    state.movies.popular.isLoading && state.movies.upcoming.isLoading,
   ]);
 
   const load = useCallback(() => {
