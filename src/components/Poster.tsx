@@ -15,6 +15,13 @@ const Image = styled(animated(RNImage))<{size: number; color: string}>`
   border-color: ${props => props.color};
   border-width: 0.1px;
 `;
+const ImageContainer = styled(View)<{size: number; color: string}>`
+  width: ${props => props.size};
+  height: ${props => props.size * 1.5};
+  border-radius: ${props => props.size * 0.08};
+  background-color: ${props => props.color}
+  border-width: 0.1px;
+`;
 
 interface IPoster {
   url: string;
@@ -58,21 +65,24 @@ export function Poster({
           elevation: 7,
           marginLeft: margin,
         }}>
-        <Image
-          source={{uri: url}}
-          size={size}
-          onLoadEnd={() => setLoaded(true)}
-          color={primary}
-          style={[
-            spring,
-            {
-              backgroundColor: color(theme.colors.surface)
-                .darken(0.8)
-                .rgb()
-                .string(),
-            },
-          ]}
-        />
+        <ImageContainer color={theme.colors.surface} size={size}>
+          <Image
+            source={{uri: url}}
+            size={size}
+            onLoadEnd={() => setLoaded(true)}
+            color={primary}
+            style={[
+              spring,
+              {
+                backgroundColor: color(theme.colors.surface)
+                  .darken(0.8)
+                  .rgb()
+                  .string(),
+              },
+            ]}
+          />
+        </ImageContainer>
+
         {showInfo ? (
           <View style={{paddingTop: 5, paddingHorizontal: size * 0.02}}>
             <Text

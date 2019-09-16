@@ -58,7 +58,7 @@ export const loadPopularAndUpcoming = () => {
               },
             ),
           );
-        }, 0);
+        }, 3000);
       }),
     );
   };

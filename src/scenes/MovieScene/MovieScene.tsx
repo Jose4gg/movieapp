@@ -1,12 +1,12 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {
-  ImageBackground,
   Dimensions,
   Animated,
   View,
-  StyleSheet,
+  Alert,
   ScrollView,
   Image,
+  StyleSheet,
 } from 'react-native';
 import {useNavigationParam} from 'react-navigation-hooks';
 import {useTheme} from '../../utils/theme';
@@ -57,8 +57,13 @@ export function MovieScene() {
     }, 200);
   });
 
+  const background = color(backgroundColor)
+    .darken(0.85)
+    .rgb()
+    .string();
+
   return (
-    <View style={{flex: 1, backgroundColor}}>
+    <View style={{flex: 1, backgroundColor: background}}>
       <AnimatedImage
         onLoadEnd={() => setLoaded(true)}
         source={{
@@ -102,12 +107,7 @@ export function MovieScene() {
           });
         }}>
         <View style={{height: height}} />
-        <ContentContainer
-          style={{minHeight: height * 0.6}}
-          color={color(backgroundColor)
-            .darken(0.85)
-            .rgb()
-            .string()}>
+        <ContentContainer style={{minHeight: height * 0.6}} color={background}>
           <View
             style={{
               alignSelf: 'center',
@@ -134,14 +134,14 @@ export function MovieScene() {
             <Button
               style={{backgroundColor: theme.colors.primary}}
               mode="contained"
-              onPress={() => alert('Not supperted yet')}>
+              onPress={() => Alert.alert('Ups!', 'Not supperted yet')}>
               Bookmark
             </Button>
             <View style={{width: 8}}></View>
             <Button
               style={{backgroundColor: theme.colors.error}}
               mode="contained"
-              onPress={() => alert('Not supperted yet')}>
+              onPress={() => Alert.alert('Ups!', 'Not supperted yet')}>
               Buy Tickets
             </Button>
           </View>

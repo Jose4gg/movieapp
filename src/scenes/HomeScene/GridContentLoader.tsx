@@ -60,7 +60,7 @@ export function GridContentLoader({
       />
       <Rect
         x="0"
-        y={smallPosterWidth * 1.5 + 5}
+        y={smallPosterWidth * 1.5 + PADDING_HORIZONTAL / (NUM_COLUMNS - 1)}
         rx={smallPosterWidth * 0.08}
         ry={smallPosterWidth * 0.08}
         width={smallPosterWidth}
@@ -68,7 +68,7 @@ export function GridContentLoader({
       />
       <Rect
         x={smallPosterWidth + PADDING_HORIZONTAL / (NUM_COLUMNS - 1)}
-        y={smallPosterWidth * 1.5 + 5}
+        y={smallPosterWidth * 1.5 + PADDING_HORIZONTAL / (NUM_COLUMNS - 1)}
         rx={smallPosterWidth * 0.08}
         ry={smallPosterWidth * 0.08}
         width={smallPosterWidth}
@@ -76,7 +76,7 @@ export function GridContentLoader({
       />
       <Rect
         x={smallPosterWidth * 2 + (PADDING_HORIZONTAL / (NUM_COLUMNS - 1)) * 2}
-        y={smallPosterWidth * 1.5 + 5}
+        y={smallPosterWidth * 1.5 + PADDING_HORIZONTAL / (NUM_COLUMNS - 1)}
         rx={smallPosterWidth * 0.08}
         ry={smallPosterWidth * 0.08}
         width={smallPosterWidth}
