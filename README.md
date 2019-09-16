@@ -1,14 +1,12 @@
-# :space_invader: Movie App with React-Native 
+# :space_invader: Movie App with React-Native
 
-## How to run 
-
+## How to run
 
 ```
-Create an .env file and add the next keys: 
+Create an .env file and add the next keys:
 
 MOVIEDB_TOKEN=YOUR MOVIE DB TOKEN
 ```
-
 
 ```
 npm install
@@ -19,7 +17,7 @@ npm run (ios | android)
 
 ## Packages Used for this Demo
 
-- React-Native 0.63.rc3 
+- React-Native 0.63.rc3
 - Typescript 🙌🏽
 - React-Navigation, React-Navigation-Hooks
 - React-Native-Dotenv, secure tokens
@@ -29,3 +27,8 @@ npm run (ios | android)
 - React-Native-Vector-Icons
 - React-Native-SVG and React-Native-SVG-Animated for content loaders
 - Axios with instances to connect with API
+
+## SHOWCASE
+
+![Home Scene](./showcase/HomeScene.png)
+![Movie Scene](./showcase/MovieScene.png)
