@@ -6,19 +6,19 @@ import color from 'color';
 
 interface ICarouselContentLoader {
   width: number;
-  height: number;
+  posterWidth: number;
   padding: number;
 }
 
 export function CarouselContentLoader({
   width,
-  height,
+  posterWidth,
   padding,
 }: ICarouselContentLoader) {
   const theme = useTheme();
   return (
     <SvgAnimatedLinearGradient
-      height={height * 1.5}
+      height={posterWidth * 1.5}
       width={width}
       duration={1000}
       primaryColor={color(theme.colors.surface)
@@ -34,16 +34,16 @@ export function CarouselContentLoader({
         y="0"
         rx="4"
         ry="4"
-        width={height}
-        height={`${height * 0.96 * 1.5}`}
+        width={posterWidth}
+        height={`${posterWidth * 1.5}`}
       />
       <Rect
-        x={height + padding}
+        x={posterWidth + padding}
         y="0"
         rx="4"
         ry="4"
-        width={height}
-        height={`${height * 0.96 * 1.5}`}
+        width={posterWidth}
+        height={`${posterWidth * 1.5}`}
       />
     </SvgAnimatedLinearGradient>
   );

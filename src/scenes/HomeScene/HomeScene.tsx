@@ -121,12 +121,12 @@ export function HomeScene() {
 
   const _renderItems: SectionListRenderItem<any> = ({section, index}) => {
     if (section.horizontal) {
+      const POSTER_WIDTH = width * 0.5;
       if (section.data[index].data.length == 0 && isLoading) {
-        const height = 180;
         return (
           <CarouselContentLoader
             width={width}
-            height={height}
+            posterWidth={POSTER_WIDTH}
             padding={PADDING_HORIZONTAL}
           />
         );
@@ -149,7 +149,7 @@ export function HomeScene() {
               <Poster
                 data={item}
                 showInfo={false}
-                size={180}
+                size={POSTER_WIDTH}
                 margin={18}
                 url={`https://image.tmdb.org/t/p/w300/${item.poster_path}`}
               />

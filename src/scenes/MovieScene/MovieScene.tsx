@@ -64,34 +64,37 @@ export function MovieScene() {
 
   return (
     <View style={{flex: 1, backgroundColor: background}}>
-      <AnimatedImage
-        onLoadEnd={() => setLoaded(true)}
-        source={{
-          uri: `https://image.tmdb.org/t/p/original/${movie.poster_path}`,
-        }}
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          opacity: spring.opacity,
-          transform: [
-            {
-              scaleX: scale.scale
-                .interpolate({
-                  range: [1, height],
-                  output: [1.5, 1],
-                })
-                .interpolate(x => x),
-            },
-            {
-              scaleY: scale.scale
-                .interpolate({
-                  range: [1, height],
-                  output: [1.5, 1],
-                })
-                .interpolate(x => x),
-            },
-          ],
-        }}
-      />
+      <View style={[StyleSheet.absoluteFillObject, {overflow: 'scroll'}]}>
+        <AnimatedImage
+          onLoadEnd={() => setLoaded(true)}
+          source={{
+            uri: `https://image.tmdb.org/t/p/original/${movie.poster_path}`,
+          }}
+          style={{
+            ...StyleSheet.absoluteFill,
+            opacity: spring.opacity,
+            overflow: 'hidden',
+            transform: [
+              {
+                scaleX: scale.scale
+                  .interpolate({
+                    range: [1, height],
+                    output: [1.5, 1],
+                  })
+                  .interpolate(x => x),
+              },
+              {
+                scaleY: scale.scale
+                  .interpolate({
+                    range: [1, height],
+                    output: [1.5, 1],
+                  })
+                  .interpolate(x => x),
+              },
+            ],
+          }}
+        />
+      </View>
 
       <ScrollView
         ref={scroll}
