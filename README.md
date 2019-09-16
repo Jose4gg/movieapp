@@ -30,6 +30,8 @@ npm run (ios | android)
 
 ## SHOWCASE
 
-|               Home Scene                |                Movie Scene                |             Video              |
-| :-------------------------------------: | :---------------------------------------: | :----------------------------: |
-| ![Home Scene](./showcase/HomeScene.png) | ![Movie Scene](./showcase/MovieScene.png) | ![Video](./showcase/video.gif) |
+|               Home Scene                |                Movie Scene                |
+| :-------------------------------------: | :---------------------------------------: |
+| ![Home Scene](./showcase/HomeScene.png) | ![Movie Scene](./showcase/MovieScene.png) |
+
+![Video](./showcase/video.gif){:height="50%" width="50%"}
