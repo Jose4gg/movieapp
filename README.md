@@ -34,4 +34,9 @@ npm run (ios | android)
 | :-------------------------------------: | :---------------------------------------: |
 | ![Home Scene](./showcase/HomeScene.png) | ![Movie Scene](./showcase/MovieScene.png) |
 
-![Video](./showcase/video.gif){:height="50%" width="50%"}
+
+|               Video                     |                                           |
+| :-------------------------------------: | :---------------------------------------: |
+| ![Video](./showcase/video.gif)          |                                           |
+
+
