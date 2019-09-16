@@ -1,4 +1,4 @@
-# :space_invader: Movie App with React-Native
+# :space_invader: Movie App with React-Native 
 
 ## How to run 
 
@@ -20,6 +20,7 @@ npm run (ios | android)
 ## Packages Used for this Demo
 
 - React-Native 0.63.rc3 
+- Typescript 🙌🏽
 - React-Navigation, React-Navigation-Hooks
 - React-Native-Dotenv, secure tokens
 - Redux, Redux-Thunk for global state
