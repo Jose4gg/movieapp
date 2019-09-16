@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef} from 'react';
 import {useTheme} from '../../utils/theme';
 import styled from 'styled-components/native';
-import {Headline, Subheading, ActivityIndicator} from 'react-native-paper';
+import {Headline, Subheading} from 'react-native-paper';
 import {
   SectionList,
   ImageBackground,
@@ -10,6 +10,7 @@ import {
   FlatList as FL,
   View,
   Dimensions,
+  ActivityIndicator,
   RefreshControl,
 } from 'react-native';
 import {Poster} from '../../components';
@@ -205,6 +206,7 @@ export function HomeScene() {
             <RefreshControl
               refreshing={isLoading && data[1].data.length != 0}
               colors={[theme.colors.text]}
+              progressBackgroundColor={theme.colors.surface}
               tintColor={theme.colors.text}
               onRefresh={load}
             />

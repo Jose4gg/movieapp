@@ -35,7 +35,6 @@ export function MovieScene() {
   const {height} = Dimensions.get('screen');
   const backgroundColor = theme.colors.surface;
   const [loaded, setLoaded] = useState(false);
-  const deltaY = useRef(new Animated.Value(height)).current;
 
   const spring = useSpring({
     opacity: loaded ? 1 : 0,
@@ -72,7 +71,10 @@ export function MovieScene() {
           }}
           style={{
             ...StyleSheet.absoluteFill,
-            opacity: spring.opacity,
+            opacity: spring.opacity.interpolate({
+              range: [0, 0, 1],
+              output: [0, 1, 1],
+            }),
             overflow: 'hidden',
             transform: [
               {
@@ -104,7 +106,6 @@ export function MovieScene() {
         style={{backgroundColor: 'rgba(0,0,0,0.01)'}}
         scrollEventThrottle={16}
         onScroll={event => {
-          deltaY.setValue(height - event.nativeEvent.contentOffset.y);
           set({
             scale: height - event.nativeEvent.contentOffset.y,
           });

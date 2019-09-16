@@ -1,14 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {useTheme} from '../utils/theme';
-import {View, TouchableOpacity, Image as RNImage} from 'react-native';
+import {View, TouchableOpacity, Animated} from 'react-native';
 import {Text} from 'react-native-paper';
 import {StarRating} from './StarRating';
 import {useNavigation} from 'react-navigation-hooks';
-import {animated, useSpring} from 'react-spring';
 import color from 'color';
 
-const Image = styled(animated(RNImage))<{size: number; color: string}>`
+const Image = styled(Animated.Image)<{size: number; color: string}>`
   width: ${props => props.size};
   height: ${props => props.size * 1.5};
   border-radius: ${props => props.size * 0.08};
@@ -19,7 +18,7 @@ const ImageContainer = styled(View)<{size: number; color: string}>`
   width: ${props => props.size};
   height: ${props => props.size * 1.5};
   border-radius: ${props => props.size * 0.08};
-  background-color: ${props => props.color}
+  background-color: ${props => props.color};
   border-width: 0.1px;
 `;
 
@@ -40,8 +39,15 @@ export function Poster({
 }: IPoster) {
   const theme = useTheme();
   const navigation = useNavigation();
-  const [loaded, setLoaded] = useState(false);
-  const spring = useSpring({opacity: loaded ? 1 : 0});
+  const [fadeAnim] = useState(new Animated.Value(0));
+
+  const show = useCallback(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const goToMovie = useCallback(() => {
     navigation.navigate('MovieScene', {movie: data});
@@ -69,10 +75,12 @@ export function Poster({
           <Image
             source={{uri: url}}
             size={size}
-            onLoadEnd={() => setLoaded(true)}
+            onLoadEnd={show}
             color={primary}
             style={[
-              spring,
+              {
+                opacity: fadeAnim,
+              },
               {
                 backgroundColor: color(theme.colors.surface)
                   .darken(0.8)
