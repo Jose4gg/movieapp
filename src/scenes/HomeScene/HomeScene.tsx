@@ -1,7 +1,7 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {useTheme} from '../../utils/theme';
 import styled from 'styled-components/native';
-import {Headline, Subheading} from 'react-native-paper';
+import {Headline, Subheading, ActivityIndicator} from 'react-native-paper';
 import {
   SectionList,
   ImageBackground,
@@ -17,10 +17,13 @@ import {SafeAreaView} from 'react-navigation';
 import color from 'color';
 import {useSelector, useDispatch} from 'react-redux';
 import {ReduxState} from '../../store';
-import {loadPopularAndUpcoming} from '../../store/movies/moviesActions';
+import {
+  loadPopularAndUpcoming,
+  loadMoreUpcoming,
+} from '../../store/movies/moviesActions';
 import {GridContentLoader} from './GridContentLoader';
 import {CarouselContentLoader} from './CarouselContentLoader';
-import {useSpring, animated} from 'react-spring';
+import {animated} from 'react-spring';
 const FlatList = animated(FL);
 
 const BG = require('../../assets/images/movietheater.jpg');
@@ -46,6 +49,7 @@ export function HomeScene() {
   const dispatch = useDispatch();
   const width = Dimensions.get('screen').width;
   const smallPosterWidth = width / NUM_COLUMNS - PADDING_HORIZONTAL;
+  const onMomentum = useRef(true);
   const [popular, upcoming, isLoading] = useSelector((state: ReduxState) => [
     state.movies.popular,
     state.movies.upcoming,
@@ -72,6 +76,10 @@ export function HomeScene() {
       data: upcoming.movies,
     },
   ];
+
+  const loadMore = useCallback(() => {
+    if (!onMomentum.current) dispatch(loadMoreUpcoming());
+  }, [onMomentum.current]);
 
   const _Header = (
     <>
@@ -209,14 +217,26 @@ export function HomeScene() {
             marginTop: 10,
           }}
           ListHeaderComponent={_Header}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.5}
+          extraData={popular.isLoading}
+          onMomentumScrollBegin={() => (onMomentum.current = false)}
           renderItem={_renderItems}
           renderSectionHeader={_SubHeader}
           ListFooterComponent={
-            <View
-              style={{
-                height: 70,
-              }}
-            />
+            <>
+              <View
+                style={{
+                  height: 40,
+                }}
+              />
+              <ActivityIndicator color={theme.colors.text} />
+              <View
+                style={{
+                  height: 70,
+                }}
+              />
+            </>
           }
         />
       </Container>

@@ -46,6 +46,17 @@ export function moviesReducer(
         },
       };
     }
+    case 'LOAD_MORE_UPCOMING': {
+      return {
+        ...state,
+        upcoming: {
+          isLoading: false,
+          currentPage: action.payload.page,
+          movies: [...state.upcoming.movies, ...action.payload.results],
+          totalPages: action.payload.total_pages,
+        },
+      };
+    }
     default:
       return state;
   }

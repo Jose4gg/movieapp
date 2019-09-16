@@ -6,10 +6,12 @@ export const movieAPI = axios.create({
   timeout: 30000,
 });
 
-movieAPI.interceptors.request.use(config => ({
-  ...config,
-  params: {
-    api_key: MOVIEDB_TOKEN,
-    ...config.params,
-  },
-}));
+movieAPI.interceptors.request.use(config => {
+  return {
+    ...config,
+    params: {
+      api_key: MOVIEDB_TOKEN,
+      ...config.params,
+    },
+  };
+});

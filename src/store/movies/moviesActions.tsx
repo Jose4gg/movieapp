@@ -6,10 +6,12 @@ import {
   ISetMovieLoading,
   SET_MOVIE_LOADING,
   IApiResponse,
+  LOAD_MORE_UPCOMING,
 } from './moviesTypes';
 import {Dispatch} from 'react';
 import {movieAPI} from '../../api';
 import axios from 'axios';
+import {ReduxState} from '..';
 
 export const setMovieLoading = (
   keys: (keyof IMovieState)[],
@@ -28,6 +30,38 @@ export const setPopularAndUpcoming = (
     upcoming,
   },
 });
+
+export const setMoreUpcoming = (data: IApiResponse): moviesActionTypes => ({
+  type: LOAD_MORE_UPCOMING,
+  payload: data,
+});
+
+export const loadMoreUpcoming = () => {
+  return (
+    dispatch: Dispatch<moviesActionTypes>,
+    getState: () => ReduxState,
+  ) => {
+    const {
+      movies: {
+        upcoming: {isLoading, currentPage, totalPages},
+      },
+    } = getState();
+    if (!isLoading && currentPage !== totalPages && currentPage) {
+      dispatch(setMovieLoading(['upcoming']));
+      movieAPI
+        .get<IApiResponse>('movie/upcoming', {
+          params: {
+            page: currentPage + 1,
+          },
+        })
+        .then(response => {
+          setTimeout(() => {
+            dispatch(setMoreUpcoming(response.data));
+          }, 3000);
+        });
+    }
+  };
+};
 
 export const loadPopularAndUpcoming = () => {
   return (dispath: Dispatch<moviesActionTypes>) => {
@@ -58,7 +92,7 @@ export const loadPopularAndUpcoming = () => {
               },
             ),
           );
-        }, 3000);
+        }, 0);
       }),
     );
   };

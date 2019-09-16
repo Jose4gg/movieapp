@@ -1,5 +1,6 @@
 export const SET_MOVIE_LOADING = 'SET_MOVIE_LOADING';
 export const LOAD_POPULAR_AND_UPCOMING = 'LOAD_HOT_AND_UPCOMING';
+export const LOAD_MORE_UPCOMING = 'LOAD_MORE_UPCOMING';
 
 export interface ILoadPopularAndUpcoming {
   type: typeof LOAD_POPULAR_AND_UPCOMING;
@@ -12,6 +13,11 @@ export interface ILoadPopularAndUpcoming {
 export interface ISetMovieLoading {
   type: typeof SET_MOVIE_LOADING;
   payload: (keyof IMovieState)[];
+}
+
+export interface ILoadMoreUpcoming {
+  type: typeof LOAD_MORE_UPCOMING;
+  payload: IApiResponse;
 }
 
 export interface IMovie {
@@ -44,4 +50,7 @@ export interface IMovieState {
   upcoming: IResponse;
 }
 
-export type moviesActionTypes = ILoadPopularAndUpcoming | ISetMovieLoading;
+export type moviesActionTypes =
+  | ILoadPopularAndUpcoming
+  | ISetMovieLoading
+  | ILoadMoreUpcoming;
