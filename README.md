@@ -17,7 +17,7 @@ npm run (ios | android)
 
 ## Packages Used for this Demo
 
-- React-Native 0.63.rc3
+- React-Native 0.61.rc3
 - Animated library from RN, fadeIn, and background scaling effect
 - Typescript 🙌🏽
 - React-Navigation, React-Navigation-Hooks
